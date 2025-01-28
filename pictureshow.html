@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xuuuuuun</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #E3FDF5 0%, #FFE6FA 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .photo {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .photo:hover {
+            transform: scale(1.05);
+        }
+        .category {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border-bottom: 2px solid #2c3e50;
+        }
+        /* 添加模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 30%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .close {
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        /* 添加折叠样式 */
+        .category-header {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .category-header:after {
+            content: '▼';
+            margin-left: 10px;
+        }
+        .category-header.collapsed:after {
+            content: '▶';
+        }
+        .category-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .category-content.collapsed {
+            max-height: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Xuuuuuun</h1>
+    
+    <div class="category">
+        <h2 class="category-header">景色</h2>
+        <div class="category-content">
+            <div class="gallery">
+                <img src="D:\精修照片\nice3.png" alt="景色1" class="photo">
+                <img src="D:\精修照片\nice4.png" alt="景色2" class="photo">
+                <img src="D:\精修照片\nice5.png" alt="景色3" class="photo">
+            </div>
+        </div>
+    </div>
+
+    <div class="category">
+        <h2 class="category-header">人物</h2>
+        <div class="category-content">
+            <div class="gallery">
+                <img src="D:\精修照片\nice6.png" alt="人物1" class="photo">
+                <img src="D:\精修照片\nice7.png" alt="人物2" class="photo">
+                <img src="D:\精修照片\nice8.png" alt="人物3" class="photo">
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加模态框 -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <script>
+        // 获取模态框元素
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("modalImg");
+        var closeBtn = document.getElementsByClassName("close")[0];
+
+        // 为所有照片添加点击事件
+        var photos = document.getElementsByClassName("photo");
+        for(var i = 0; i < photos.length; i++) {
+            photos[i].onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+            }
+        }
+
+        // 点击关闭按钮关闭模态框
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // 点击模态框外部关闭模态框
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 添加折叠功能
+        var headers = document.getElementsByClassName("category-header");
+        for(var i = 0; i < headers.length; i++) {
+            headers[i].onclick = function() {
+                this.classList.toggle("collapsed");
+                var content = this.nextElementSibling;
+                content.classList.toggle("collapsed");
+            }
+        }
+    </script>
+</body>
+</html>
